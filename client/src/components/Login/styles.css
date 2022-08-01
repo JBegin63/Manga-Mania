@@ -1,0 +1,16 @@
+.loginStyle {
+    border: 3px solid black;
+    padding: 10px;
+}
+
+.loginFormStyle {
+    font-size: 24px;
+}
+
+.loginFormStyle input {
+    height: 3.5rem;
+}
+
+.loginFormStyle button {
+    font-size: 20px;
+}

@@ -1,0 +1,22 @@
+Manga Social Media Site: Manga Mania
+
+Login and register -
+   Required: First and last name, username?, password, email
+Main dashboard - 
+   Optional - Shows all new comments about liked manga or just all comments about manga if not then just immediately display all manga
+List of all manga -
+   Alphabetically or sort by most favorites
+   Optional: search by title or author
+Description page for manga -
+   Required: title, author, score (1 - 10),  if user posted it then they favorited it
+   Optional: Image, volume count, ongoing or completed, start date to current or over
+   Scroll down to see post a comment and see other comments about series, reply is optional
+   You can rate series and favorite them
+Edit page for manga - 
+   Only original poster can change anything so validation is needed
+   Required: Name, author, score (1 - 10)
+   Optional: Image, volume count, ongoing or completed, start date to current or over
+User page -
+   Required: Show first and last name or username, show all favorited manga
+   Optional: Can upload profile pic, if none then faceless person img
+   Everyone can see all user pages but only user can change their stuff
