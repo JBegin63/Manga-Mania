@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import NavbarComponent from '../Nav/Nav';
 
-const Manga = () => {
+const DisplayManga = () => {
     const [isLoggedin, setIsloggedin] = useState(false);
     return (
         <div>
@@ -10,4 +10,4 @@ const Manga = () => {
     )
 }
 
-export default Manga
+export default DisplayManga

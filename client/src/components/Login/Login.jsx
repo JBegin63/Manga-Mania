@@ -80,7 +80,7 @@ const Login = ({ setIsLoggedin }) => {
                     <div className='loginFormStyle mt-3'>
                         <h5>Don't have an account yet?</h5>
                         <Link to='/register' style={{ textDecoration: "none" }}>
-                            <button className='btn btn-success'>Register</button>
+                            <button className='btn btn-success'>Register Here</button>
                         </Link>
                     </div>
                 </div>

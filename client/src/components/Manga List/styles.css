@@ -1,0 +1,43 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    width: 100%;
+}
+
+.allManga {
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.mangalist-container {
+    background-color: #eee;
+}
+
+img {
+    width: 100px;
+    height: auto;
+}
+
+.card { 
+    width: 20%;
+    height: auto;
+}
+
+a:link { 
+    text-decoration: none; 
+}
+
+a:visited { 
+    text-decoration: none; 
+}
+
+a:hover { 
+    text-decoration: none; 
+}
+
+a:active { 
+    text-decoration: none; 
+}

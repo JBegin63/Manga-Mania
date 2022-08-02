@@ -117,7 +117,7 @@ const Register = ({setIsLoggedin}) => {
                     <div className='loginFormStyle mt-3'>
                         <h5>Already have an account?</h5>
                         <Link to='/' style={{ textDecoration: "none" }}>
-                            <button className='btn btn-success'>Login</button>
+                            <button className='btn btn-success'>Login Here</button>
                         </Link>
                     </div>
                 </div>

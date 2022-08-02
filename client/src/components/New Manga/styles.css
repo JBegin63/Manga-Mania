@@ -1,0 +1,22 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    width: 100%;
+}
+
+img {
+    width: 100px;
+    height: auto;
+}
+
+.mangaPic{
+    border: 1px solid black;
+    padding: 40px;
+}
+
+.mangaPic-container {
+    background-color: #eee;
+}

@@ -18,6 +18,17 @@ const MangaSchema = mongoose.Schema(
             minlength: [1, 'Your password must be 8 characters or longer'],
             maxlength: [10, 'Your password must be 8 characters or longer']
         },
+        synopsis: {
+            type: String,
+            required: [true, "Must add synopsis to manga"],
+            minlength: [40, 'Synopsis as way too short'],
+            maxlength: [400, 'Synopsis is way too long']
+        },
+        coverImage: {
+            type: Buffer,
+            contentType: String,
+            required: [true, "Add a cover image for the manga"]
+        },
         volumesCurrentlyOut: {
             type: Number,
             minlength: [1, 'Your password must be 8 characters or longer']

@@ -8,7 +8,7 @@ import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse';
 import './styles.css'
 
 const NavbarComponent = ({ isLoggedin, setIsLoggedin }) => {
-    const [currentUser, setCurrentUser] = useState(null);
+    const [currentUser, setCurrentUser] = useState([]);
     const navigate = useNavigate('');
     const logout = () => {
         axios
@@ -37,12 +37,14 @@ const NavbarComponent = ({ isLoggedin, setIsLoggedin }) => {
     return (
         <Navbar bg="dark" variant='dark'>
             <Container>
-                <Navbar.Brand><h2 className='ms-2'>Manga Mania</h2></Navbar.Brand>
+                <Navbar.Brand>
+                    <h2 className='me-4'>Manga Mania</h2>
+                </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <div className='mx-3'>
-                            <Link to={`/user/$`}>
+                            <Link to={`/api/user/${currentUser._id}`}>
                                 <Navbar.Text href='/dashboard'>My Page</Navbar.Text>
                             </Link>
                         </div>
@@ -54,6 +56,11 @@ const NavbarComponent = ({ isLoggedin, setIsLoggedin }) => {
                         <div className='mx-3'>
                             <Link to='/manga'>
                                 <Navbar.Text>All Manga</Navbar.Text>
+                            </Link>
+                        </div>
+                        <div className='mx-3'>
+                            <Link to='/add/manga'>
+                                <Navbar.Text>Add Manga</Navbar.Text>
                             </Link>
                         </div>
                     </Nav>

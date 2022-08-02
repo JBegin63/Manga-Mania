@@ -7,7 +7,6 @@ import Comment from '../Comment/Comment'
 
 const Dashboard = () => {
     const [isLoggedin, setIsloggedin] = useState(false);
-    const [currentUser, setCurrentUser] = useState(null);
     const [users, setUsers] = useState([]);
     const [comments, setComments] = useState([]);
 
@@ -25,18 +24,6 @@ const Dashboard = () => {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8000/api/current-user', { withCredentials: true })
-            .then((res) => {
-                console.log(res.data);
-                setCurrentUser(res.data);
-            })
-            .catch((err) => {
-                console.log(err.response);
-            });
-    }, [isLoggedin])
-
-    useEffect(() => {
-        axios
         .get('http://localhost:8000/api/comments')
         .then((res) => {
             console.log(res.data);
@@ -51,20 +38,20 @@ const Dashboard = () => {
         <div className='dashboard-container'>
             <NavbarComponent isLoggedin={isLoggedin} setIsloggedin={setIsloggedin} />
             <div className='row'>
-                <h1 className='my-3 pb-2'>Dashboard</h1>
+                <h1 className='my-3 pb-3'>Dashboard</h1>
             </div>
-            <div className='d-flex justify-content-evenly'>
-                <div className='col-2 me-5'>
+            <div className='d-flex justify-content-center'>
+                <div className='col-2'>
                     <h2>Other Users</h2>
                     {users.map((user) => (
                         <div key={user._id}>
-                            <Link to={`/api/user/${users._id}`}>
+                            <Link to={`/api/user/${user._id}`}>
                                 <p style={{ fontSize: "24px"}}>{user.firstName} {user.lastName}</p>
                             </Link>
                         </div>
                     ))}
                 </div>
-                <div className='col-8 allComments'>
+                <div className='col-6 allComments me-5'>
                     <div className='d-flex justify-content-between p-2'>
                         <h2>Timeline</h2>
                         <form>
