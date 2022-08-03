@@ -27,7 +27,6 @@ const MangaSchema = mongoose.Schema(
         coverImage: {
             type: Buffer,
             contentType: String,
-            required: [true, "Add a cover image for the manga"]
         },
         volumesCurrentlyOut: {
             type: Number,

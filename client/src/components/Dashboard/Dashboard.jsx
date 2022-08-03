@@ -46,7 +46,7 @@ const Dashboard = () => {
                     {users.map((user) => (
                         <div key={user._id}>
                             <Link to={`/api/user/${user._id}`}>
-                                <p style={{ fontSize: "24px"}}>{user.firstName} {user.lastName}</p>
+                                <p style={{ fontSize: "24px"}}>{user.username}</p>
                             </Link>
                         </div>
                     ))}

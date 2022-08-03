@@ -26,7 +26,6 @@ const NavbarComponent = ({ isLoggedin, setIsLoggedin }) => {
         axios
         .get('http://localhost:8000/api/current-user', { withCredentials: true })
             .then((res) => {
-                console.log(res.data);
                 setCurrentUser(res.data);
             })
             .catch((err) => {
@@ -68,7 +67,7 @@ const NavbarComponent = ({ isLoggedin, setIsLoggedin }) => {
                 <NavbarCollapse className='justify-content-end'>
                     <Nav className='me-5 align-items-center'>
                         <Navbar.Text className='me-3 '>
-                                Signed in as: {currentUser && <span>{currentUser.firstName}, {currentUser.lastName}</span>}
+                                Signed in as: {currentUser && <span>{currentUser.username}</span>}
                         </Navbar.Text>
                         <Navbar.Text>
                             <button className='btn btn-danger' onClick={logout}>Logout</button>

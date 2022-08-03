@@ -25,7 +25,7 @@ const MangaList = () => {
             <NavbarComponent isLoggedin={isLoggedin} setIsloggedin={setIsloggedin} />
             <div className='d-flex justify-content-evenly mt-1'>
                 <div className='col-8 allManga'>
-                    <div className='d-flex justify-content-between py-2 px-5 mt-5'>
+                    <div className='d-flex flex-wrap justify-content-between py-2 px-5 mt-5'>
                         <h1>All Manga</h1>
                         <form>
                             <select name="filter" id="filter">
@@ -36,7 +36,7 @@ const MangaList = () => {
                     </div>
                     <div className='d-flex flex-wrap justify-content-evenly align-items-center mt-5'>
                         {manga.map((manga) => (
-                            <div key={manga._id} className='card'>
+                            <div key={manga._id} className='card mb-4' style={{ flex: "0 0 27.333333%" }}>
                                 <Link to={`/manga/${manga._id}`} style={{ textDecoration: 'none'}}>
                                     <img className='card-img-top' src={profilePic} alt='Card pic' />
                                     <div className='card-body'>

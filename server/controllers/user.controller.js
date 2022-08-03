@@ -16,7 +16,7 @@ const register = async (req, res) => {
     const newUser = await user.save();
     console.log('User created', newUser);
     const userToken = jwt.sign(
-        { _id: newUser._id, email: newUser.email, firstName: newUser.firstName, lastName: newUser.lastName },
+        { _id: newUser._id, email: newUser.email, firstName: newUser.firstName, lastName: newUser.lastName, username: newUser.username },
         SECRET,
         );
         console.log('JWT:', userToken);
@@ -42,7 +42,7 @@ const login = async (req, res) => {
                     res.status(400).json({ error: 'invalid email/password' });
                 } else {
                     const userToken = jwt.sign(
-                        { _id: userDocument._id, email: userDocument.email, firstName: userDocument.firstName, lastName: userDocument.lastName },
+                        { _id: userDocument._id, email: userDocument.email, firstName: userDocument.firstName, lastName: userDocument.lastName, username: userDocument.username },
                             SECRET,
                         );
                         console.log('JWT:', userToken);

@@ -9,6 +9,7 @@ const Register = ({setIsLoggedin}) => {
     const [user, setUser] = useState({
         firstName: '',
         lastName: '',
+        username: '',
         email: '',
         password: '',
         confirmPassword: '',
@@ -68,6 +69,20 @@ const Register = ({setIsLoggedin}) => {
                                     />
                                     {errors.lastName && <span className="text-danger">{errors.lastName.message}</span>}
                                 </div>
+                            </div>
+                        </div>
+                        <div className='align-items-center py-3'>
+                            <div className='col-auto'>
+                                <input 
+                                    type="text"
+                                    placeholder='Username'
+                                    name='username'
+                                    onChange={handleChange}
+                                    value={user.username}
+                                    required
+                                    className='form-control'
+                                />
+                                {errors.email && <span className="text-danger">{errors.email.message}</span>}
                             </div>
                         </div>
                         <div className='align-items-center py-3'>

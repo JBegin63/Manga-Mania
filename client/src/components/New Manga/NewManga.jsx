@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const NewManga = () => {
     const navigate = useNavigate();
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState([]);
     const [manga, setManga] = useState({
         title: '',
         author: '',
@@ -133,7 +133,7 @@ const NewManga = () => {
                                 <span className="text-danger">{errors.volumesCurrentlyOut.message}</span>}
                             </div>
                         </div>
-                        <div className='col-3 align-items-center'>
+                        <div className='col-2 align-items-center'>
                             <div className='form-group'>
                                 <select 
                                     name="mangaStatus" 
@@ -141,8 +141,8 @@ const NewManga = () => {
                                     onChange={handleChange} 
                                     value={manga.mangaStatus}
                                 >
-                                    <option value="completed">Completed</option>
-                                    <option value="ongoing">Ongoing</option>
+                                    <option value="true">Completed</option>
+                                    <option value="false">Ongoing</option>
                                 </select>
                                 {errors.mangaStatus && 
                                 <span className="text-danger">{errors.mangaStatus.message}</span>}
