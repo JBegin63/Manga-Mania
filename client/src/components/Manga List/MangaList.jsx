@@ -19,10 +19,9 @@ const MangaList = () => {
         })
     }, [])
 
-    const [isLoggedin, setIsloggedin] = useState(false);
     return (
         <div className='mangalist-container'>
-            <NavbarComponent isLoggedin={isLoggedin} setIsloggedin={setIsloggedin} />
+            <NavbarComponent />
             <div className='d-flex justify-content-evenly mt-1'>
                 <div className='col-8 allManga'>
                     <div className='d-flex flex-wrap justify-content-between py-2 px-5 mt-5'>

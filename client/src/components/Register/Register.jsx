@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './styles.css';
 
-const Register = ({setIsLoggedin}) => {
+const Register = () => {
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
     const [user, setUser] = useState({
@@ -27,7 +27,6 @@ const Register = ({setIsLoggedin}) => {
         axios.post('http://localhost:8000/register', user, { withCredentials: true }) 
             .then((res) => {
                 console.log(res.data);
-                setIsLoggedin(true);
                 navigate('/dashboard')
             })
             .catch((err) => {

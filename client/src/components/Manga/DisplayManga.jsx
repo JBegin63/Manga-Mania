@@ -35,8 +35,8 @@ const DisplayManga = () => {
             .then((res) => {
                 console.log(res.data[0]);
                 setManga(res.data[0]);
-                setCreator(res.data[0].createdBy);
                 console.log(res.data[0].createdBy);
+                setCreator(res.data[0].createdBy);
             })
             .catch((err) => {
                 console.log(err.response);

@@ -27,6 +27,10 @@ const UserSchema = mongoose.Schema(
             required: [true, "Password is required"],
             minlength: [8, 'Your password must be 8 characters or longer']
         },
+        favoritedManga: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Manga'
+        }
     }, { timestamps: true, });
 
 UserSchema.virtual('confirmPassword')

@@ -7,7 +7,7 @@ import Container from 'react-bootstrap/Container'
 import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse';
 import './styles.css'
 
-const NavbarComponent = ({ isLoggedin, setIsLoggedin }) => {
+const NavbarComponent = () => {
     const [currentUser, setCurrentUser] = useState([]);
     const navigate = useNavigate('');
     const logout = () => {
@@ -31,7 +31,7 @@ const NavbarComponent = ({ isLoggedin, setIsLoggedin }) => {
             .catch((err) => {
                 console.log(err.response);
             });
-    }, [isLoggedin])
+    }, [])
 
     return (
         <Navbar bg="dark" variant='dark'>

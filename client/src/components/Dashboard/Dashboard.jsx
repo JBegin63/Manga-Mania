@@ -6,7 +6,6 @@ import NavbarComponent from '../Nav/Nav';
 import Comment from '../Comment/Comment'
 
 const Dashboard = () => {
-    const [isLoggedin, setIsloggedin] = useState(false);
     const [users, setUsers] = useState([]);
     const [comments, setComments] = useState([]);
 
@@ -36,7 +35,7 @@ const Dashboard = () => {
 
     return (
         <div className='dashboard-container'>
-            <NavbarComponent isLoggedin={isLoggedin} setIsloggedin={setIsloggedin} />
+            <NavbarComponent />
             <div className='row'>
                 <h1 className='my-3 pb-3'>Dashboard</h1>
             </div>
