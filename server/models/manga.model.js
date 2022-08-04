@@ -25,8 +25,7 @@ const MangaSchema = mongoose.Schema(
             maxlength: [400, 'Synopsis is way too long']
         },
         coverImage: {
-            type: Buffer,
-            contentType: String,
+            type: String
         },
         volumesCurrentlyOut: {
             type: Number,

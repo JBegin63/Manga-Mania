@@ -37,7 +37,7 @@ const Dashboard = () => {
         <div className='dashboard-container'>
             <NavbarComponent />
             <div className='row'>
-                <h1 className='my-3 pb-3'>Dashboard</h1>
+                <h1 className='my-3 pb-3'>Home</h1>
             </div>
             <div className='d-flex justify-content-center'>
                 <div className='col-2'>
@@ -62,12 +62,11 @@ const Dashboard = () => {
                     </div>
                     <Comment />
                     {comments.map((comment) => (
-                        <div key={comment._id}>
+                        <div key={comment._id} className='my-4'>
                             <p style={{ fontSize: "24px"}}>{comment.description}</p>
                         </div>
                     ))}
                 </div>
-                
             </div>
         </div>
     )

@@ -4,8 +4,8 @@ const CommentSchema = mongoose.Schema(
     {
         description: {
             type: String,
-            required: [true, "First name is required"],
-            minlength: [2, 'Your first name should be longer than 2 characters'],
+            required: [true, "Hey! You forgot to comment :P"],
+            minlength: [2, 'Comment must be at least 2 characters long'],
         },
         createdBy: {
             type:mongoose.Schema.Types.ObjectId,
