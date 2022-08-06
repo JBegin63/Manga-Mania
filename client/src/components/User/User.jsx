@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import profilePic from './profilePic.png';
 import './styles.css';
-import NavbarComponent from '../Nav/Nav';
+import Header from '../Header/Header';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const User = () => {
-    const [user, setUser] = useState([]);
     const [currentUser, setCurrentUser] = useState([]);
+    const navigate = useNavigate();
     const [errors, setErrors] = useState({});
     const { id } = useParams('');
-    const [editUser, setEditUser] = useState({
+    const [user, setUser] = useState({
         firstName: '',
         lastName: '',
         username: '',
         email: '',
+        profilePic: '',
     });
 
     const handleChange = (e) => {
-        setEditUser({
-            ...editUser,
+        setUser({
+            ...user,
             [e.target.name]: e.target.value,
         });
     };
@@ -55,9 +56,10 @@ const User = () => {
     const submitHandler = (e) => {
         e.preventDefault();
         axios
-            .put(`http://localhost:8000/api/user/${id}`, { withCredentials: true })
+            .put(`http://localhost:8000/api/user/${currentUser}`, { withCredentials: true })
             .then((res) => {
                 console.log(res);
+                navigate('/dashboard')
             })
             .catch((err) => {
                 console.log(err.response);
@@ -67,26 +69,23 @@ const User = () => {
     if (currentUser === id) {
         return (
             <div className='profile-container'>
-                <NavbarComponent />
+                <Header />
                 <div className='row'>
                     <h1 className='my-4'>{user.username}'s Profile Page</h1>
                 </div>
                 <form className='form d-flex justify-content-center mt-2' onSubmit={submitHandler}>
                     <div className='col-auto mx-5 mb-5 profilePicContainer'>
-                        <img className='profilePic' src={profilePic} alt='profile pic' />
+                        <img className='profilePic' src={user.profilePic} alt='profile pic' />
                         <div className='form-group mt-4'>
-                            <label htmlFor="profilePic" className='form-label btn btn-primary'
-                            >Upload Profile Pic</label>
                             <input 
-                                type="file"
+                                type="text"
                                 id='profilePic'
-                                className='form-control'
                                 name='profilePic'
+                                className='form-control'
                                 onChange={handleChange}
-                                accept='image/*'
                                 value={user.profilePic}
-                                style={{ display: 'none '}}
-                            />
+                                placeholder='      Upload Profile Pic'
+                        />
                         </div>
                     </div>
                     <div className='col-4 mx-5'>
@@ -145,9 +144,7 @@ const User = () => {
                             </div>
                         </div>
                         <div className='align-items-center mt-4'>
-                            <button className='btn btn-success'>
-                            {currentUser === id ? 'Edit your profile' : "This isn't your account"}
-                            </button>
+                            <button className='btn btn-success'>Submit</button>
                         </div>
                     </div>
                 </form>
@@ -176,7 +173,7 @@ const User = () => {
     } else {
         return (
             <div className='profile-container'>
-                <NavbarComponent />
+                <Header />
                 <div className='row'>
                     <h1 className='my-4'>{user.username}'s Profile Page</h1>
                 </div>

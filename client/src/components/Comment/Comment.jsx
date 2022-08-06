@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import profilePic from './profilePic.png';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const Comment = () => {
     const navigate = useNavigate();
+    const [currentUser, setCurrentUser] = useState([]);
     const [errors, setErrors] = useState([]);
     const [comment, setComment] = useState({
         description: ''
@@ -17,12 +18,25 @@ const Comment = () => {
             [e.target.name]: e.target.value,
         });
     };
+
+    // Getting current user
+    useEffect(() => {
+        axios
+        .get('http://localhost:8000/api/current-user', { withCredentials: true })
+            .then((res) => {
+                console.log(res.data);
+                setCurrentUser(res.data._id);
+            })
+            .catch((err) => {
+                console.log(err.response);
+            });
+    }, [setCurrentUser])
+
+    // Submit handler for comment
     const submitHandler = (e) => {
         e.preventDefault();
         axios
-            .post('http://localhost:8000/api/comment',
-                comment.description
-            )
+            .post('http://localhost:8000/api/comment', comment, { withCredentials: true })
             .then((res) => {
                 console.log(res.data);
                 navigate('/dashboard')
@@ -37,7 +51,7 @@ const Comment = () => {
             <form className='d-flex flex-direction-row flex-column flex-wrap align-items-stretch' onSubmit={submitHandler}>
                 <div className='d-flex align-items-center'>
                     <div className='profilePicContainerComment'>
-                        <img src={profilePic} className='img-thumbnail rounded-circle' alt="profile pic" />
+                        <img src={currentUser.profilePic} className='img-thumbnail rounded-circle' alt="profile pic" />
                     </div>
                     <div className='textContainer flex-grow-1'>
                         <textarea name="description" id="comment" cols="60" rows="5" placeholder='Comment here...' onChange={handleChange} required></textarea>

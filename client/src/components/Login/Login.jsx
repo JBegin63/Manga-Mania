@@ -20,7 +20,8 @@ const Login = () => {
 
     const handleSubmit= (e) => {
         e.preventDefault();
-        axios.post('http://localhost:8000/login', user, { withCredentials: true }) 
+        axios
+            .post('http://localhost:8000/login', user, { withCredentials: true }) 
             .then((res) => {
                 console.log(res.data.user);
                 navigate('/dashboard')
@@ -70,7 +71,6 @@ const Login = () => {
                                         required
                                         className='form-control'
                                     />
-                                    {errors.error && <span className="text-danger">{errors.error}</span>}
                                 </div>
                             </div>
                         </div>

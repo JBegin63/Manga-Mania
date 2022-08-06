@@ -22,7 +22,7 @@ const register = async (req, res) => {
         console.log('JWT:', userToken);
         res
             .status(201)
-            .cookie('userToken', userToken, { expires: new Date(Date.now() + 900000) })
+            .cookie('userToken', userToken, { expires: new Date(Date.now() + 90000000) })
             .json({ successMessage: 'user created', user: newUser });
     } catch (error) {
         console.log('Register error', error);
@@ -48,7 +48,7 @@ const login = async (req, res) => {
                         console.log('JWT:', userToken);
                         res
                             .status(201)
-                            .cookie('userToken', userToken, { expires: new Date(Date.now() + 900000) })
+                            .cookie('userToken', userToken, { expires: new Date(Date.now() + 90000000) })
                             .json({ successMessage: 'user logged in', user: userDocument });
                 }
             } catch (error) {

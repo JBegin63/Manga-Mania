@@ -27,6 +27,9 @@ const UserSchema = mongoose.Schema(
             required: [true, "Password is required"],
             minlength: [8, 'Your password must be 8 characters or longer']
         },
+        profilePic: {
+            String,
+        },
         favoritedManga: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Manga'

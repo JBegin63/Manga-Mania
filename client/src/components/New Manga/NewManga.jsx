@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import profilePic from './profilePic.png';
 import './styles.css';
-import NavbarComponent from '../Nav/Nav';
+import Header from '../Header/Header';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -27,28 +27,20 @@ const NewManga = () => {
     const submitHandler = (e) => {
         e.preventDefault();
         axios
-            .post('http://localhost:8000/api/manga',
-                manga.title,
-                manga.author,
-                manga.score,
-                manga.volumesCurrentlyOut,
-                manga.mangaStatus,
-                manga.synopsis,
-                manga.coverImage
-            )
+            .post('http://localhost:8000/api/manga', manga, { withCredentials: true })
             .then((res) => {
                 console.log(res.data);
                 navigate('/manga')
             })
             .catch((err) => {
-                console.log(err.response.data);
-                setErrors(err.response.data);
+                console.log(err.response.data.error);
+                setErrors(err.response.data.error);
             })
     }
 
     return (
         <div className='mangaPic-container'>
-            <NavbarComponent />
+            <Header />
             <div className='row'>
                 <h1 className='my-4'>Add A Manga</h1>
             </div>
@@ -56,17 +48,14 @@ const NewManga = () => {
                 <div className='col-auto mx-5 mb-5 mangaPic'>
                     <img className='profilePic' src={profilePic} alt='cover img' />
                     <div className='form-group mt-4'>
-                        <label htmlFor="coverImage" className='form-label btn btn-primary'
-                        >Upload Cover Image</label>
                         <input 
-                            type="file"
+                            type="text"
                             id='coverImage'
                             className='form-control'
                             name='coverImage'
                             onChange={handleChange}
-                            accept='image/*'
                             value={manga.coverImage}
-                            style={{ display: 'none '}}
+                            placeholder='   Upload Cover Image'
                         />
                     </div>
                 </div>
@@ -83,7 +72,6 @@ const NewManga = () => {
                                     placeholder='Title'
                                     required
                                 />
-                                {errors.title && <span className="text-danger">{errors.title.message}</span>}
                             </div>
                         </div>
                         <div className='col'>
@@ -97,8 +85,11 @@ const NewManga = () => {
                                     placeholder='Author'
                                     required
                                 />
-                                {errors.author && <span className="text-danger">{errors.author.message}</span>}
                             </div>
+                        </div>
+                        <div className='row mt-2'>
+                            {errors.title && <span className="text-danger">{errors.title.message}</span>}
+                            {errors.author && <span className="text-danger">{errors.author.message}</span>}
                         </div>
                     </div>
                     <div className='row align-items-center'>
@@ -115,7 +106,6 @@ const NewManga = () => {
                                     min="1"
                                     max="10"
                                 />
-                                {errors.score && <span className="text-danger">{errors.score.message}</span>}
                             </div>
                         </div>
                         <div className='col-6'>
@@ -129,8 +119,6 @@ const NewManga = () => {
                                     placeholder='Volumes Currently Printed'
                                     required
                                 />
-                                {errors.volumesCurrentlyOut && 
-                                <span className="text-danger">{errors.volumesCurrentlyOut.message}</span>}
                             </div>
                         </div>
                         <div className='col-2 align-items-center'>
@@ -141,13 +129,18 @@ const NewManga = () => {
                                     onChange={handleChange} 
                                     value={manga.mangaStatus}
                                 >
-                                    <option value="true">Completed</option>
-                                    <option value="false">Ongoing</option>
+                                    <option>Manga Status</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Ongoing">Ongoing</option>
+                                    <option value="On Hiatus">On Hiatus</option>
                                 </select>
-                                {errors.mangaStatus && 
-                                <span className="text-danger">{errors.mangaStatus.message}</span>}
                             </div>
                         </div>
+                    </div>
+                    <div className='row mt-2'>
+                        {errors.score && <span className="text-danger">{errors.score.message}</span>}
+                        {errors.volumesCurrentlyOut && <span className="text-danger">{errors.volumesCurrentlyOut.message}</span>}
+                        {errors.mangaStatus && <span className="text-danger">{errors.mangaStatus.message}</span>}
                     </div>
                     <div className='row mt-4'>
                         <div className='form-group'>

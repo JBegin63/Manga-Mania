@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import NavbarComponent from '../Nav/Nav';
-import profilePic from './profilePic.png';
+import Header from '../Header/Header';
 
 const DisplayManga = () => {
-    const [manga, setManga] = useState([]);
-    const [creator, setCreator] = useState([]);
-    const [currentUser, setCurrentUser] = useState([]);
     const [errors, setErrors] = useState({});
     const { id } = useParams('');
     const navigate = useNavigate('');
-    const [editManga, setEditManga] = useState({
+    const [manga, setManga] = useState({
         title: '',
         author: '',
         score: '',
@@ -22,8 +18,8 @@ const DisplayManga = () => {
     });
 
     const handleChange = (e) => {
-        setEditManga({
-            ...editManga,
+        setManga({
+            ...manga,
             [e.target.name]: e.target.value,
         });
     };
@@ -35,32 +31,17 @@ const DisplayManga = () => {
             .then((res) => {
                 console.log(res.data[0]);
                 setManga(res.data[0]);
-                console.log(res.data[0].createdBy);
-                setCreator(res.data[0].createdBy);
             })
             .catch((err) => {
                 console.log(err.response);
             });
     }, [id])
 
-    // Getting current user
-    useEffect(() => {
-        axios
-        .get('http://localhost:8000/api/current-user', { withCredentials: true })
-            .then((res) => {
-                console.log(res.data._id);
-                setCurrentUser(res.data._id);
-            })
-            .catch((err) => {
-                console.log(err.response);
-            });
-    }, [setCurrentUser])
-
     // Submit button for editing manga
     const submitHandler = (e) => {
         e.preventDefault();
         axios
-            .put(`http://localhost:8000/api/manga/${id}`, { withCredentials: true })
+            .put(`http://localhost:8000/api/manga/${id}`, manga, { withCredentials: true })
             .then((res) => {
                 console.log(res);
                 navigate('/manga')
@@ -73,16 +54,23 @@ const DisplayManga = () => {
 
     return (
         <div className='mangaPic-container'>
-            <NavbarComponent />
+            <Header />
             <div className='row'>
                 <h1 className='my-4'>{manga.title}</h1>
             </div>
             <form className='form d-flex justify-content-center align-items-center' onSubmit={submitHandler}>
                 <div className='col-auto mx-5 mb-5 mangaPic'>
-                    <img className='profilePic' src={profilePic} alt='cover img' />
+                    <img className='coverImage' src={manga.coverImage} alt='cover img' />
                     <div className='form-group mt-4'>
-                        <label htmlFor="coverImage" className='form-label btn btn-primary'
-                        >Cover Image</label>
+                        <input 
+                            type="text"
+                            id='coverImage'
+                            className='form-control'
+                            name='coverImage'
+                            onChange={handleChange}
+                            value={manga.coverImage}
+                            placeholder='   Upload Cover Image'
+                        />
                     </div>
                 </div>
                 <div className='col-4 mx-5'>
@@ -152,8 +140,10 @@ const DisplayManga = () => {
                                     value={manga.mangaStatus}
                                     onChange={handleChange}
                                 >
-                                    <option value="completed">Completed</option>
-                                    <option value="ongoing">Ongoing</option>
+                                    <option value="">Manga Status</option>
+                                    <option value="Completed">Completed</option>
+                                    <option value="Ongoing">Ongoing</option>
+                                    <option value="On Hiatus">On Hiatus</option>
                                 </select>
                                 {errors.mangaStatus && 
                                 <span className="text-danger">{errors.mangaStatus.message}</span>}
@@ -168,9 +158,7 @@ const DisplayManga = () => {
                         </div>
                     </div>
                     <div className='align-items-center mt-4'>
-                        <button className='btn btn-success'>
-                            {currentUser === creator ? 'Edit Manga' : 'Nothing'}
-                        </button>
+                        <button className='btn btn-success'>Edit Manga</button>
                     </div>
                 </div>
             </form>

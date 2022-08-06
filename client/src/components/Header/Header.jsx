@@ -7,7 +7,7 @@ import Container from 'react-bootstrap/Container'
 import NavbarCollapse from 'react-bootstrap/esm/NavbarCollapse';
 import './styles.css'
 
-const NavbarComponent = () => {
+const Header = () => {
     const [currentUser, setCurrentUser] = useState([]);
     const navigate = useNavigate('');
     const logout = () => {
@@ -79,4 +79,4 @@ const NavbarComponent = () => {
     )
 }
 
-export default NavbarComponent
+export default Header

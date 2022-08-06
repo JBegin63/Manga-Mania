@@ -4,18 +4,18 @@ const jwt = require('jsonwebtoken');
 
 const createManga = (req, res) => {
     const user = jwt.verify(req.cookies.userToken, SECRET)
-    Manga.create({...req.body, createdBy: user._id})
+    Manga.create({ ...req.body, createdBy: user._id })
         .then((newManga) => {
             res.status(200).json(newManga);
         })
         .catch((err) => {
             console.log('Error in creating manga', err);
-            res.status(400).json({ message:"something went wrong in creating the manga", error: err.errors });
+            res.status(400).json({ message: "something went wrong in creating the manga", error: err.errors });
         });
 };
 
 const getManga = (req, res) => {
-    Manga.find({}).populate('createdBy', 'firstName lastName email')
+    Manga.find({}).populate('createdBy', 'username email')
         .then((manga) => {
             res.json(manga);
         })
@@ -40,6 +40,8 @@ const getMangaById = (req, res) => {
 const updateManga = (req, res) => {
     Manga.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
         .then((updatedManga) => {
+            console.log(res);
+            console.log(updatedManga);
             res.json(updatedManga);
         })
         .catch((err) => {

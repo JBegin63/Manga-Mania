@@ -11,7 +11,12 @@ const CommentSchema = mongoose.Schema(
             type:mongoose.Schema.Types.ObjectId,
             ref: 'User',
         },
-        commentFor: {
+        likeCount: {
+            type: Number,
+            default: 0
+        },
+        tags: [String],
+        commentForManga: {
             type:mongoose.Schema.Types.ObjectId,
             ref: 'Manga',
         },

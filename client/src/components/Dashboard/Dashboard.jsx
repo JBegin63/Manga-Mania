@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './styles.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import NavbarComponent from '../Nav/Nav';
-import Comment from '../Comment/Comment'
+import Comment from '../Comment/Comment';
+import Header from '../Header/Header';
 
 const Dashboard = () => {
     const [users, setUsers] = useState([]);
@@ -35,7 +35,7 @@ const Dashboard = () => {
 
     return (
         <div className='dashboard-container'>
-            <NavbarComponent />
+            <Header />
             <div className='row'>
                 <h1 className='my-3 pb-3'>Home</h1>
             </div>

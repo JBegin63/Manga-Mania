@@ -18,6 +18,15 @@ const MangaSchema = mongoose.Schema(
             minlength: [1, 'Your password must be 8 characters or longer'],
             maxlength: [10, 'Your password must be 8 characters or longer']
         },
+        volumesCurrentlyOut: {
+            type: Number,
+            minlength: [1, 'Your password must be 8 characters or longer']
+        },
+        mangaStatus: {
+            type: String,
+            required: [true, 'Manga status is required'],
+            enum: ['Completed', 'Ongoing', 'On Hiatus'],
+        },
         synopsis: {
             type: String,
             required: [true, "Must add synopsis to manga"],
@@ -25,15 +34,8 @@ const MangaSchema = mongoose.Schema(
             maxlength: [400, 'Synopsis is way too long']
         },
         coverImage: {
-            type: String
-        },
-        volumesCurrentlyOut: {
-            type: Number,
-            minlength: [1, 'Your password must be 8 characters or longer']
-        },
-        mangaStatus: {
-            type: Boolean,
-            default: false,
+            type: String,
+            required: [true, 'Manga requires cover art']
         },
         createdBy: {
             type:mongoose.Schema.Types.ObjectId,

@@ -15,7 +15,7 @@ const createComment = (req, res) => {
 };
 
 const getComments = (req, res) => {
-    Comment.find({}).populate('createdBy', 'firstName lastName email', 'commentFor', 'title')
+    Comment.find({}).populate('createdBy', 'firstName lastName email', 'commentForManga', 'title')
         .then((comment) => {
             res.json(comment);
         })
