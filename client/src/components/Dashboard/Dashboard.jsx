@@ -9,6 +9,7 @@ const Dashboard = () => {
     const [users, setUsers] = useState([]);
     const [comments, setComments] = useState([]);
 
+    // Getting all users
     useEffect(() => {
         axios
             .get('http://localhost:8000/api/users')
@@ -21,6 +22,7 @@ const Dashboard = () => {
             })
     }, [])
 
+    // Getting all comments
     useEffect(() => {
         axios
         .get('http://localhost:8000/api/comments')

@@ -15,7 +15,7 @@ const createManga = (req, res) => {
 };
 
 const getManga = (req, res) => {
-    Manga.find({}).populate('createdBy', 'username email')
+    Manga.find({}).populate('likes', 'username email')
         .then((manga) => {
             res.json(manga);
         })
@@ -62,10 +62,24 @@ const deleteManga = (req, res) => {
         })
 };
 
+const liked = (req, res) => {
+    Manga.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
+        .then((likedManga) => {
+            console.log(res);
+            console.log(likedManga);
+            res.json(likedManga);
+        })
+        .catch((err) => {
+            console.log('Error in liking manga', err);
+            res.status(400).json({ message:"something went wrong in liking the manga", error: err });
+        });
+};
+
 module.exports = {
     createManga,
     getManga, 
     getMangaById,
     updateManga,
-    deleteManga
+    deleteManga,
+    liked,
 }

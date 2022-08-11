@@ -7,15 +7,19 @@ const CommentSchema = mongoose.Schema(
             required: [true, "Hey! You forgot to comment :P"],
             minlength: [2, 'Comment must be at least 2 characters long'],
         },
-        createdBy: {
-            type:mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-        },
         likeCount: {
             type: Number,
             default: 0
         },
+        dislikeCount: {
+            type: Number,
+            default: 0
+        },
         tags: [String],
+        createdBy: {
+            type:mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+        },
         commentForManga: {
             type:mongoose.Schema.Types.ObjectId,
             ref: 'Manga',

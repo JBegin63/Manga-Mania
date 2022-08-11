@@ -13,6 +13,7 @@ const Register = () => {
         email: '',
         password: '',
         confirmPassword: '',
+        profilePic: 'https://fredfloridalaw.com/wp-content/uploads/2021/12/PngItem_307416.png'
     });
 
     const handleChange = (e) => {
@@ -125,6 +126,7 @@ const Register = () => {
                                 />
                                 {errors.confirmPassword && <span className="text-danger">{errors.confirmPassword.message}</span>}
                             </div>
+                            <input type="text" name='profilePic' value='https://fredfloridalaw.com/wp-content/uploads/2021/12/PngItem_307416.png' hidden readOnly/>
                         </div>
                         <button className='btn btn-primary my-3'>Register</button>
                     </form>

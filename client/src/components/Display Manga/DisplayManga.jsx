@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../Header/Header';
+import './styles.css'
 
 const DisplayManga = () => {
+    const navigate = useNavigate('');
+    const [currentUser, setCurrentUser] = useState([]);
     const [errors, setErrors] = useState({});
     const { id } = useParams('');
-    const navigate = useNavigate('');
     const [manga, setManga] = useState({
         title: '',
         author: '',
@@ -14,7 +16,8 @@ const DisplayManga = () => {
         volumesCurrentlyOut: '',
         mangaStatus: '',
         synopsis: '',
-        coverImage: ''
+        coverImage: '',
+        likes: '',
     });
 
     const handleChange = (e) => {
@@ -36,7 +39,7 @@ const DisplayManga = () => {
                 console.log(err.response);
             });
     }, [id])
-
+    
     // Submit button for editing manga
     const submitHandler = (e) => {
         e.preventDefault();
@@ -52,16 +55,56 @@ const DisplayManga = () => {
             })
     }
 
+    // Getting current user
+    useEffect(() => {
+        axios
+            .get('http://localhost:8000/api/current-user', { withCredentials: true })
+            .then((res) => {
+                console.log(res.data);
+                setCurrentUser(res.data);
+            })
+            .catch((err) => {
+                console.log(err.response);
+            });
+    }, [])
+
+    // Like button 
+    const likeHandler = (e) => {
+        e.preventDefault();
+        axios
+            .put(`http://localhost:8000/api/manga/${id}`, {likes: currentUser._id}, { withCredentials: true })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err.response.data);
+                setErrors(err.response.data);
+            })
+        axios
+            .put(`http://localhost:8000/api/user/${currentUser._id}`, {likes: currentUser}, { withCredentials: true })
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                console.log(err.response.data);
+                setErrors(err.response.data);
+            })
+    }
+
     return (
         <div className='mangaPic-container'>
             <Header />
             <div className='row'>
                 <h1 className='my-4'>{manga.title}</h1>
+                <div>
+                    <button className='btn btn-primary' onClick={likeHandler}>Like</button>
+                </div>
             </div>
             <form className='form d-flex justify-content-center align-items-center' onSubmit={submitHandler}>
                 <div className='col-auto mx-5 mb-5 mangaPic'>
-                    <img className='coverImage' src={manga.coverImage} alt='cover img' />
+                    <img className='mangaCoverImage' src={manga.coverImage} alt='cover img' />
                     <div className='form-group mt-4'>
+                        <label htmlFor="coverImage" className='form-label'>Cover Image Link</label>
                         <input 
                             type="text"
                             id='coverImage'

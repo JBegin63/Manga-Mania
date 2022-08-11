@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import profilePic from './profilePic.png';
+import profilePic from '../Default Image/profilePic.png';
 import './styles.css';
 import Header from '../Header/Header';
 import axios from 'axios';

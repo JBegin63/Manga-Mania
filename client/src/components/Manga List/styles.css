@@ -16,9 +16,9 @@ body {
     background-color: #eee;
 }
 
-img {
-    width: 100px;
-    height: auto;
+.mangaCoverImage {
+    width: auto;
+    height: 500px;
 }
 
 .card { 

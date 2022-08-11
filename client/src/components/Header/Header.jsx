@@ -10,6 +10,8 @@ import './styles.css'
 const Header = () => {
     const [currentUser, setCurrentUser] = useState([]);
     const navigate = useNavigate('');
+
+    // Logout handler
     const logout = () => {
         axios
             .post('http://localhost:8000/logout')
@@ -22,6 +24,7 @@ const Header = () => {
             })
     }
 
+    // Getting current user
     useEffect(() => {
         axios
         .get('http://localhost:8000/api/current-user', { withCredentials: true })

@@ -1,4 +1,5 @@
 const User = require('../models/user.model');
+const Manga = require('../models/manga.model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const SECRET = process.env.JWT_SECRET;
@@ -16,7 +17,7 @@ const register = async (req, res) => {
     const newUser = await user.save();
     console.log('User created', newUser);
     const userToken = jwt.sign(
-        { _id: newUser._id, email: newUser.email, firstName: newUser.firstName, lastName: newUser.lastName, username: newUser.username },
+        { _id: newUser._id, email: newUser.email, firstName: newUser.firstName, lastName: newUser.lastName, username: newUser.username, profilePic: newUser.profilePic },
         SECRET,
         );
         console.log('JWT:', userToken);
@@ -42,7 +43,7 @@ const login = async (req, res) => {
                     res.status(400).json({ error: 'invalid email/password' });
                 } else {
                     const userToken = jwt.sign(
-                        { _id: userDocument._id, email: userDocument.email, firstName: userDocument.firstName, lastName: userDocument.lastName, username: userDocument.username },
+                        { _id: userDocument._id, email: userDocument.email, firstName: userDocument.firstName, lastName: userDocument.lastName, username: userDocument.username, profilePic: userDocument.profilePic },
                             SECRET,
                         );
                         console.log('JWT:', userToken);
@@ -131,6 +132,19 @@ const deleteUser = (req, res) => {
         })
 };
 
+const liked = (req, res) => {
+    User.findByIdAndUpdate({ _id: req.params.id }, {$push: { likes: Manga._id }}, { new: true, useFindAndModify: false })
+        .then((likedManga) => {
+            console.log(res);
+            console.log(likedManga);
+            res.json(likedManga);
+        })
+        .catch((err) => {
+            console.log('Error in liking manga', err);
+            res.status(400).json({ message:"something went wrong in liking the manga", error: err });
+        });
+};
+
 module.exports = {
     register, 
     logout,
@@ -140,4 +154,5 @@ module.exports = {
     getUserById,
     updateUser,
     deleteUser,
+    liked,
 }

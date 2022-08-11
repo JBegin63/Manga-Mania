@@ -11,11 +11,6 @@ body {
     width: 100%;
 }
 
-.mangaPic{
-    border: 1px solid black;
-    padding: 40px;
-}
-
 .mangaPic-container {
     background-color: #eee;
 }

@@ -37,10 +37,9 @@ const MangaSchema = mongoose.Schema(
             type: String,
             required: [true, 'Manga requires cover art']
         },
-        createdBy: {
-            type:mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-        }
+        likes: [
+            {type: mongoose.Schema.Types.ObjectId, ref: "User"},
+        ],
     }, { timestamps: true, });
 
 //mongoose makes it lowercase and plur so User becomes users

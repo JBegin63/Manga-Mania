@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import profilePic from './profilePic.png';
+import profilePic from '../Default Image/profilePic.png';
 import './styles.css';
 import Header from '../Header/Header';
 import axios from 'axios';
@@ -56,7 +56,7 @@ const User = () => {
     const submitHandler = (e) => {
         e.preventDefault();
         axios
-            .put(`http://localhost:8000/api/user/${currentUser}`, { withCredentials: true })
+            .put(`http://localhost:8000/api/user/${currentUser}`, user, { withCredentials: true })
             .then((res) => {
                 console.log(res);
                 navigate('/dashboard')
@@ -86,6 +86,7 @@ const User = () => {
                                 value={user.profilePic}
                                 placeholder='      Upload Profile Pic'
                         />
+                        <div className='form-text'>Profile Pic:</div>
                         </div>
                     </div>
                     <div className='col-4 mx-5'>
@@ -100,6 +101,7 @@ const User = () => {
                                         onChange={handleChange}
                                         required
                                     />
+                                    <div className='form-text'>First Name:</div>
                                     {errors.title && <span className="text-danger">{errors.title.message}</span>}
                                 </div>
                             </div>
@@ -113,6 +115,7 @@ const User = () => {
                                         onChange={handleChange}
                                         required
                                     />
+                                    <div className='form-text'>Last Name:</div>
                                     {errors.author && <span className="text-danger">{errors.author.message}</span>}
                                 </div>
                             </div>
@@ -127,6 +130,7 @@ const User = () => {
                                     onChange={handleChange}
                                     required
                                 />
+                                <div className='form-text'>Username:</div>
                                 {errors.score && <span className="text-danger">{errors.score.message}</span>}
                             </div>
                         </div>
@@ -140,6 +144,7 @@ const User = () => {
                                     onChange={handleChange}
                                     required
                                 />
+                                <div className='form-text'>Email:</div>
                                 {errors.score && <span className="text-danger">{errors.score.message}</span>}
                             </div>
                         </div>
@@ -179,8 +184,9 @@ const User = () => {
                 </div>
                 <div className='d-flex justify-content-center mt-2' onSubmit={submitHandler}>
                     <div className='col-auto mx-5 mb-5 profilePicContainer'>
-                        <img className='profilePic' src={profilePic} alt='profile pic' />
+                        <img className='profilePic' src={user.profilePic} alt='profile pic' />
                     </div>
+                    
                     <div className='col-auto mx-5'>
                         <div className='d-flex align-items-center'>
                             <h3 className='mx-3'>First Name: </h3>

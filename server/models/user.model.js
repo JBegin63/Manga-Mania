@@ -28,12 +28,12 @@ const UserSchema = mongoose.Schema(
             minlength: [8, 'Your password must be 8 characters or longer']
         },
         profilePic: {
-            String,
+            type: String,
+            required: [true, 'Profile picture is required']
         },
-        favoritedManga: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Manga'
-        }
+        likes: [
+            {type: mongoose.Schema.Types.ObjectId, ref: "Manga"}
+        ]
     }, { timestamps: true, });
 
 UserSchema.virtual('confirmPassword')

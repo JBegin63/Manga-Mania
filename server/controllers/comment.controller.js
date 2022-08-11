@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 const createComment = (req, res) => {
     const user = jwt.verify(req.cookies.userToken, SECRET)
-    Comment.create({...req.body, createdBy: user._id, commentFor: title._id})
+    Comment.create({...req.body, createdBy: user._id, commentFor: manga._id})
         .then((newComment) => {
             res.status(200).json(newComment);
         })
@@ -15,7 +15,7 @@ const createComment = (req, res) => {
 };
 
 const getComments = (req, res) => {
-    Comment.find({}).populate('createdBy', 'firstName lastName email', 'commentForManga', 'title')
+    Comment.find({}).populate('createdBy', 'username email', 'commentForManga', 'title')
         .then((comment) => {
             res.json(comment);
         })

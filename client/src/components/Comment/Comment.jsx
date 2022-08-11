@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import profilePic from './profilePic.png';
 import './styles.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -25,7 +24,7 @@ const Comment = () => {
         .get('http://localhost:8000/api/current-user', { withCredentials: true })
             .then((res) => {
                 console.log(res.data);
-                setCurrentUser(res.data._id);
+                setCurrentUser(res.data);
             })
             .catch((err) => {
                 console.log(err.response);
