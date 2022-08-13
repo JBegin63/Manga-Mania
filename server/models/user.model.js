@@ -32,8 +32,11 @@ const UserSchema = mongoose.Schema(
             required: [true, 'Profile picture is required']
         },
         likes: [
-            {type: mongoose.Schema.Types.ObjectId, ref: "Manga"}
-        ]
+            {
+                type: mongoose.Schema.Types.ObjectId, 
+                ref: "Manga"
+            },
+        ],
     }, { timestamps: true, });
 
 UserSchema.virtual('confirmPassword')

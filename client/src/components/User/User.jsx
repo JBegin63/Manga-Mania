@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import profilePic from '../Default Image/profilePic.png';
 import './styles.css';
 import Header from '../Header/Header';
 import axios from 'axios';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 
 const User = () => {
-    const [currentUser, setCurrentUser] = useState([]);
     const navigate = useNavigate();
+    const [currentUser, setCurrentUser] = useState([]);
+    const [manga, setManga] = useState([]);
     const [errors, setErrors] = useState({});
     const { id } = useParams('');
     const [user, setUser] = useState({
@@ -32,6 +32,7 @@ const User = () => {
             .then((res) => {
                 console.log(res.data[0]);
                 setUser(res.data[0]);
+                setManga(res.data[0].likes)
             })
             .catch((err) => {
                 console.log(err.response);
@@ -44,7 +45,6 @@ const User = () => {
         axios
         .get('http://localhost:8000/api/current-user', { withCredentials: true })
             .then((res) => {
-                console.log(res.data);
                 setCurrentUser(res.data._id);
             })
             .catch((err) => {
@@ -154,23 +154,18 @@ const User = () => {
                     </div>
                 </form>
                 <div className='row mt-5'>
-                    <h2 className='mb-5'>Favorited Manga</h2>
-                    <div className='d-flex justify-content-evenly align-items-center'>
-                        <div>
-                            <div>
-                                <img className='profilePic' src={profilePic} alt='profile pic' />
+                    <h2 className='mb-5'>Liked Manga</h2>
+                    <div className='d-flex flex-wrap justify-content-evenly align-items-center mt-5'>
+                        {manga.map((manga) => (
+                            <div key={manga._id} className='card mb-4' style={{ flex: "0 0 30%" }}>
+                                <Link to={`/manga/${manga._id}`} style={{ textDecoration: 'none'}}>
+                                    <img className='card-img-top mangaCoverImage' src={manga.coverImage} alt='Card pic' />
+                                    <div className='card-body'>
+                                        <h2 className='card-title'>{manga.title}</h2>
+                                    </div>
+                                </Link>
                             </div>
-                        </div>
-                        <div>
-                            <div>
-                                <img className='profilePic' src={profilePic} alt='profile pic' />
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                <img className='profilePic' src={profilePic} alt='profile pic' />
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -203,22 +198,19 @@ const User = () => {
                     </div>
                 </div>
                 <div className='row mt-5'>
-                    <h2 className='mb-5'>Favorited Manga</h2>
+                    <h2 className='mb-5'>Liked Manga</h2>
                     <div className='d-flex justify-content-evenly align-items-center'>
                         <div>
-                            <div>
-                                <img className='profilePic' src={profilePic} alt='profile pic' />
+                        {manga.map((manga) => (
+                            <div key={manga._id} className='card mb-4' style={{ flex: "0 0 30%" }}>
+                                <Link to={`/manga/${manga._id}`} style={{ textDecoration: 'none'}}>
+                                    <img className='card-img-top mangaCoverImage' src={manga.coverImage} alt='Card pic' />
+                                    <div className='card-body'>
+                                        <h2 className='card-title'>{manga.title}</h2>
+                                    </div>
+                                </Link>
                             </div>
-                        </div>
-                        <div>
-                            <div>
-                                <img className='profilePic' src={profilePic} alt='profile pic' />
-                            </div>
-                        </div>
-                        <div>
-                            <div>
-                                <img className='profilePic' src={profilePic} alt='profile pic' />
-                            </div>
+                        ))}
                         </div>
                     </div>
                 </div>

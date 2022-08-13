@@ -6,7 +6,6 @@ import './styles.css'
 
 const DisplayManga = () => {
     const navigate = useNavigate('');
-    const [currentUser, setCurrentUser] = useState([]);
     const [errors, setErrors] = useState({});
     const { id } = useParams('');
     const [manga, setManga] = useState({
@@ -55,38 +54,26 @@ const DisplayManga = () => {
             })
     }
 
-    // Getting current user
-    useEffect(() => {
-        axios
-            .get('http://localhost:8000/api/current-user', { withCredentials: true })
-            .then((res) => {
-                console.log(res.data);
-                setCurrentUser(res.data);
-            })
-            .catch((err) => {
-                console.log(err.response);
-            });
-    }, [])
-
     // Like button 
     const likeHandler = (e) => {
         e.preventDefault();
         axios
-            .put(`http://localhost:8000/api/manga/${id}`, {likes: currentUser._id}, { withCredentials: true })
+            .put(`http://localhost:8000/api/manga/like/${id}`, {}, { withCredentials: true })
             .then((res) => {
-                console.log(res);
+                console.log(res.data);
             })
             .catch((err) => {
                 console.log(err.response.data);
                 setErrors(err.response.data);
             })
         axios
-            .put(`http://localhost:8000/api/user/${currentUser._id}`, {likes: currentUser}, { withCredentials: true })
+            .put(`http://localhost:8000/api/user/like/${id}`, {} ,{ withCredentials: true })
             .then((res) => {
-                console.log(res);
+                console.log(manga._id);
+                console.log(res.data);
             })
             .catch((err) => {
-                console.log(err.response.data);
+                console.log(err.response);
                 setErrors(err.response.data);
             })
     }

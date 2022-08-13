@@ -38,7 +38,10 @@ const MangaSchema = mongoose.Schema(
             required: [true, 'Manga requires cover art']
         },
         likes: [
-            {type: mongoose.Schema.Types.ObjectId, ref: "User"},
+            {
+                type: mongoose.Schema.Types.ObjectId, 
+                ref: "User",
+            },
         ],
     }, { timestamps: true, });
 

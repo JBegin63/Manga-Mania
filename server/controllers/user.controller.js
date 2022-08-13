@@ -67,7 +67,7 @@ const logout = (req, res) => {
 const getLoggedInUser = async (req, res) => {
     console.log('Token', req.cookies)
     const user = jwt.verify(req.cookies.userToken, SECRET);
-    User.findOne({ _id: user._id })
+    User.findById({ _id: user._id })
         .then((user) => {
             console.log(user)
             res.json(user);
@@ -132,11 +132,14 @@ const deleteUser = (req, res) => {
         })
 };
 
-const liked = (req, res) => {
-    User.findByIdAndUpdate({ _id: req.params.id }, {$push: { likes: Manga._id }}, { new: true, useFindAndModify: false })
+const liked = async (req, res) => {
+    const user = jwt.verify(req.cookies.userToken, SECRET);
+    User.findOneAndUpdate({ _id: user._id }, { $addToSet: { likes: req.params.id, }}, { new: true, useFindAndModify: false })
         .then((likedManga) => {
-            console.log(res);
+            console.log('//')
+            console.log(user);
             console.log(likedManga);
+            console.log('//')
             res.json(likedManga);
         })
         .catch((err) => {

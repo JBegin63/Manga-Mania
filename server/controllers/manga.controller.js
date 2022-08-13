@@ -1,6 +1,7 @@
 const Manga = require('../models/manga.model');
 const SECRET = process.env.JWT_SECRET;
 const jwt = require('jsonwebtoken');
+const User = require('../models/user.model');
 
 const createManga = (req, res) => {
     const user = jwt.verify(req.cookies.userToken, SECRET)
@@ -15,7 +16,7 @@ const createManga = (req, res) => {
 };
 
 const getManga = (req, res) => {
-    Manga.find({}).populate('likes', 'username email')
+    Manga.find({}).populate('likes', 'id')
         .then((manga) => {
             res.json(manga);
         })
@@ -63,9 +64,21 @@ const deleteManga = (req, res) => {
 };
 
 const liked = (req, res) => {
-    Manga.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
+    const user = jwt.verify(req.cookies.userToken, SECRET)
+    Manga.findByIdAndUpdate({ _id: req.params.id } , { $addToSet: { likes: user._id, } }, { new: true, useFindAndModify: false })
         .then((likedManga) => {
-            console.log(res);
+            res.json(likedManga);
+        })
+        .catch((err) => {
+            console.log('Error in liking manga', err);
+            res.status(400).json({ message:"something went wrong in liking the manga", error: err });
+        });
+};
+
+const unliked = (req, res) => {
+    const user = jwt.verify(req.cookies.userToken, SECRET)
+    Manga.findOneAndUpdate({ _id: req.params.id } , {$pull: { likes: user._id }},  { new: true, useFindAndModify: false })
+        .then((likedManga) => {
             console.log(likedManga);
             res.json(likedManga);
         })
@@ -75,6 +88,7 @@ const liked = (req, res) => {
         });
 };
 
+
 module.exports = {
     createManga,
     getManga, 
@@ -82,4 +96,5 @@ module.exports = {
     updateManga,
     deleteManga,
     liked,
+    unliked,
 }
