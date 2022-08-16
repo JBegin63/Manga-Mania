@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Comment = () => {
-    const navigate = useNavigate();
     const [currentUser, setCurrentUser] = useState([]);
+    const [manga, setManga] = useState([]);
     const [errors, setErrors] = useState([]);
     const [comment, setComment] = useState({
-        description: ''
-    });
+        description: '',
+        taggedManga: '',
+});
 
     const handleChange = (e) => {
         setComment({
@@ -31,20 +31,32 @@ const Comment = () => {
             });
     }, [setCurrentUser])
 
+    // Getting all manga
+    useEffect(() => {
+        axios
+        .get('http://localhost:8000/api/manga')
+        .then((res) => {
+            console.log(res.data);
+            setManga(res.data);
+        })
+        .catch((err) => {
+            console.log('Failed to load comments', err)
+        })
+    }, [])
+
     // Submit handler for comment
-    const submitHandler = (e) => {
-        e.preventDefault();
+    const submitHandler = () => {
         axios
             .post('http://localhost:8000/api/comment', comment, { withCredentials: true })
             .then((res) => {
                 console.log(res.data);
-                navigate('/dashboard')
             })
             .catch((err) => {
                 console.log(err.response.data);
                 setErrors(err.response.data);
             })
     }
+
     return (
         <div className='commentContainer'>
             <form className='d-flex flex-direction-row flex-column flex-wrap align-items-stretch' onSubmit={submitHandler}>
@@ -57,9 +69,16 @@ const Comment = () => {
                         {errors.description && <span className="text-danger">{errors.description.message}</span>}
                     </div>
                 </div>
-                <div className='d-flex align-items-center justify-content-end me-2'>
-                    <div className=''>
-                        <button className='btn btn-primary me-3'>Edit</button>
+                <div className='d-flex align-items-center justify-content-end align-items-center'>
+                    <div className='me-2'>
+                        <select name="taggedManga" id="taggedManga" onChange={handleChange}>
+                            <option value="">Tag A Manga</option>
+                            {manga.map((manga) => (
+                                <option key={manga._id} value={manga._id}>{manga.title}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className='me-2'>
                         <button className='btn btn-success'>Post</button>
                     </div>
                 </div>

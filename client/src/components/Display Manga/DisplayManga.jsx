@@ -78,6 +78,30 @@ const DisplayManga = () => {
             })
     }
 
+    // Like button 
+    const unlikeHandler = (e) => {
+        e.preventDefault();
+        axios
+            .put(`http://localhost:8000/api/manga/unlike/${id}`, {}, { withCredentials: true })
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((err) => {
+                console.log(err.response.data);
+                setErrors(err.response.data);
+            })
+        axios
+            .put(`http://localhost:8000/api/user/unlike/${id}`, {} ,{ withCredentials: true })
+            .then((res) => {
+                console.log(manga._id);
+                console.log(res.data);
+            })
+            .catch((err) => {
+                console.log(err.response);
+                setErrors(err.response.data);
+            })
+    }
+
     return (
         <div className='mangaPic-container'>
             <Header />
@@ -85,6 +109,9 @@ const DisplayManga = () => {
                 <h1 className='my-4'>{manga.title}</h1>
                 <div>
                     <button className='btn btn-primary' onClick={likeHandler}>Like</button>
+                </div>
+                <div>
+                    <button className='btn btn-danger' onClick={unlikeHandler}>Unlike</button>
                 </div>
             </div>
             <form className='form d-flex justify-content-center align-items-center' onSubmit={submitHandler}>

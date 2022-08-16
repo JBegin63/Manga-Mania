@@ -10,4 +10,5 @@ module.exports = app => {
     app.put('/api/user/:id', UserController.updateUser);
     app.delete('/api/user/:id', UserController.deleteUser);
     app.put('/api/user/like/:id', UserController.liked);
+    app.put('/api/user/unlike/:id', UserController.unliked);
 }

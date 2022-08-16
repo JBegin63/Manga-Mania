@@ -27,6 +27,26 @@ const getManga = (req, res) => {
         })
 };
 
+const getMangaByUser = (req, res) => {
+    User.findOne({ _id: req.params.id }).then((user) => {
+        Manga.find({ likes: user._id })
+            .populate('likes', 'id')
+            .then((manga) => {
+                res.json(manga);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(400)
+                .json({ message:"something went wrong in finding all the manga", error: err });
+            })
+        .catch((err) => {
+            console.log(err);
+            res.status(400)
+            .json({ message:"something went wrong in finding all the manga", error: err });
+        })
+    })
+};
+
 const getMangaById = (req, res) => {
     Manga.find({ _id: req.params.id })
         .then((manga) => {
@@ -38,6 +58,7 @@ const getMangaById = (req, res) => {
             .json({ message:"something went wrong in finding the manga", error: err });
         })
 };
+
 const updateManga = (req, res) => {
     Manga.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, runValidators: true })
         .then((updatedManga) => {
@@ -88,7 +109,6 @@ const unliked = (req, res) => {
         });
 };
 
-
 module.exports = {
     createManga,
     getManga, 
@@ -97,4 +117,5 @@ module.exports = {
     deleteManga,
     liked,
     unliked,
+    getMangaByUser,
 }

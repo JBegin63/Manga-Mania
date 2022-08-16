@@ -65,11 +65,9 @@ const logout = (req, res) => {
 };
 
 const getLoggedInUser = async (req, res) => {
-    console.log('Token', req.cookies)
     const user = jwt.verify(req.cookies.userToken, SECRET);
     User.findById({ _id: user._id })
         .then((user) => {
-            console.log(user)
             res.json(user);
         })
         .catch((error) => {
@@ -80,8 +78,6 @@ const getLoggedInUser = async (req, res) => {
 const getUsers = (req, res) => {
     User.find({})
         .then((users) => {
-            console.log(res);
-            console.log(users);
             res.json(users);
         })
         .catch((err) => {
@@ -94,8 +90,6 @@ const getUsers = (req, res) => {
 const getUserById = (req, res) => {
     User.find({ _id: req.params.id })
         .then((user) => {
-            console.log(res);
-            console.log(user);
             res.json(user);
         })
         .catch((err) => {
@@ -136,10 +130,18 @@ const liked = async (req, res) => {
     const user = jwt.verify(req.cookies.userToken, SECRET);
     User.findOneAndUpdate({ _id: user._id }, { $addToSet: { likes: req.params.id, }}, { new: true, useFindAndModify: false })
         .then((likedManga) => {
-            console.log('//')
-            console.log(user);
-            console.log(likedManga);
-            console.log('//')
+            res.json(likedManga);
+        })
+        .catch((err) => {
+            console.log('Error in liking manga', err);
+            res.status(400).json({ message:"something went wrong in liking the manga", error: err });
+        });
+};
+
+const unliked = async (req, res) => {
+    const user = jwt.verify(req.cookies.userToken, SECRET);
+    User.findOneAndUpdate({ _id: user._id }, { $pull: { likes: req.params.id, }}, { new: true, useFindAndModify: false })
+        .then((likedManga) => {
             res.json(likedManga);
         })
         .catch((err) => {
@@ -158,4 +160,5 @@ module.exports = {
     updateUser,
     deleteUser,
     liked,
+    unliked,
 }

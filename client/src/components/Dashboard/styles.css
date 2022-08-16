@@ -2,8 +2,14 @@
     margin: 0px;
     padding: 0px;
 }
+
 body {
     width: 100%;
+}
+
+.commentContainer {
+    border: 1px solid black;
+    padding: 10px;
 }
 
 .allComments {

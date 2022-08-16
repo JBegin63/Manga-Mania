@@ -32,7 +32,6 @@ const User = () => {
             .then((res) => {
                 console.log(res.data[0]);
                 setUser(res.data[0]);
-                setManga(res.data[0].likes)
             })
             .catch((err) => {
                 console.log(err.response);
@@ -51,6 +50,20 @@ const User = () => {
                 console.log(err.response);
             });
     }, [setCurrentUser])
+
+    // Get manga liked by user
+    useEffect(() => {
+        axios
+        .get(`http://localhost:8000/api/mangaByUser/${id}`, { withCredentials: true })
+            .then((res) => {
+                console.log(res.data);
+                setManga(res.data);
+            })
+            .catch((err) => {
+                console.log(err.response);
+                setErrors(err.response);
+            });
+    }, [id])
 
     // Submit button for editing profile 
     const submitHandler = (e) => {
@@ -201,16 +214,16 @@ const User = () => {
                     <h2 className='mb-5'>Liked Manga</h2>
                     <div className='d-flex justify-content-evenly align-items-center'>
                         <div>
-                        {manga.map((manga) => (
-                            <div key={manga._id} className='card mb-4' style={{ flex: "0 0 30%" }}>
-                                <Link to={`/manga/${manga._id}`} style={{ textDecoration: 'none'}}>
-                                    <img className='card-img-top mangaCoverImage' src={manga.coverImage} alt='Card pic' />
-                                    <div className='card-body'>
-                                        <h2 className='card-title'>{manga.title}</h2>
-                                    </div>
-                                </Link>
-                            </div>
-                        ))}
+                            {manga.map((manga) => (
+                                <div key={manga.id} className='card mb-4' style={{ flex: "0 0 30%" }}>
+                                    <Link to={`/manga/${manga._id}`} style={{ textDecoration: 'none'}}>
+                                        <img className='card-img-top mangaCoverImage' src={manga.coverImage} alt='Card pic' />
+                                        <div className='card-body'>
+                                            <h2 className='card-title'>{manga.title}</h2>
+                                        </div>
+                                    </Link>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
