@@ -8,7 +8,6 @@ const Comment = () => {
     const [errors, setErrors] = useState([]);
     const [comment, setComment] = useState({
         description: '',
-        taggedManga: '',
 });
 
     const handleChange = (e) => {
@@ -21,7 +20,7 @@ const Comment = () => {
     // Getting current user
     useEffect(() => {
         axios
-        .get('http://localhost:8000/api/current-user', { withCredentials: true })
+            .get('http://localhost:8000/api/current-user', { withCredentials: true })
             .then((res) => {
                 console.log(res.data);
                 setCurrentUser(res.data);
@@ -34,14 +33,14 @@ const Comment = () => {
     // Getting all manga
     useEffect(() => {
         axios
-        .get('http://localhost:8000/api/manga')
-        .then((res) => {
-            console.log(res.data);
-            setManga(res.data);
-        })
-        .catch((err) => {
-            console.log('Failed to load comments', err)
-        })
+            .get('http://localhost:8000/api/manga')
+            .then((res) => {
+                console.log(res.data);
+                setManga(res.data);
+            })
+            .catch((err) => {
+                console.log('Failed to load comments', err)
+            })
     }, [])
 
     // Submit handler for comment

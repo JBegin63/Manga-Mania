@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 const createComment = (req, res) => {
     const user = jwt.verify(req.cookies.userToken, SECRET)
-    Comment.create({...req.body, createdBy: user._id, taggedManga: req.manga})
+    Comment.create({ ...req.body, createdBy: user._id, taggedManga: req.body.taggedManga })
         .then((newComment) => {
             res.status(200).json(newComment);
         })
@@ -17,7 +17,7 @@ const createComment = (req, res) => {
 
 const getComments = (req, res) => {
     Comment.find({})
-        .populate('taggedManga', 'title coverImage')
+        .populate('taggedManga', 'title id')
         .populate('createdBy', 'username email profilePic')
         .then((comment) => {
             console.log(comment)
@@ -46,7 +46,8 @@ const getCommentById = (req, res) => {
 const getMangaByComment = (req, res) => {
     Manga.findOne({ _id: req.params.id }).then((manga) => {
         Comment.find({ taggedManga: manga._id })
-            .populate('taggedManga', 'id')
+            .populate('taggedManga', 'id title')
+            .populate('createdBy', 'username email profilePic')
             .then((manga) => {
                 res.json(manga);
             })

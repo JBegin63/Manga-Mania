@@ -28,7 +28,7 @@ const CommentSchema = mongoose.Schema(
         },
         taggedManga: {
             type:mongoose.Schema.Types.ObjectId,
-            ref: 'Manga',
+            ref: 'Manga'
         }
     }, { timestamps: true, });
 

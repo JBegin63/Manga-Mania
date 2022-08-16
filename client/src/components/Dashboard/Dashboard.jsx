@@ -8,7 +8,6 @@ import Header from '../Header/Header';
 const Dashboard = () => {
     const [users, setUsers] = useState([]);
     const [comment, setComment] = useState([]);
-    const [manga, setManga] = useState([]);
     const navigate = useNavigate();
 
     // Getting all users
@@ -31,43 +30,28 @@ const Dashboard = () => {
             .then((res) => {
                 console.log(res.data);
                 setComment(res.data);
-                setManga(res.data.taggedManga)
             })
             .catch((err) => {
                 console.log('Failed to load comments', err)
             })
     }, [])
 
+    // Getting tagged manga of comments
+    useEffect(() => {
+        axios
+            .get(`http://localhost:8000/api/comments/${comment.taggedManga}`)
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((err) => {
+                console.log('Failed to load comments', err)
+            })
+    }, [comment.taggedManga])
+
     // Submit handler for comment
-    const deleteHandler = (id) => {
+    const deleteHandler = () => {
         axios
-            .delete(`http://localhost:8000/api/comment/${id}`, { withCredentials: true })
-            .then((res) => {
-                console.log(res.data);
-                navigate('/dashboard')
-            })
-            .catch((err) => {
-                console.log(err.response.data);
-            })
-    }
-
-    // Submit handler for liking
-    const likeHandler = () => {
-        axios
-            .put(`http://localhost:8000/api/comment/${comment._id}`, { withCredentials: true })
-            .then((res) => {
-                console.log(res.data);
-                navigate('/dashboard')
-            })
-            .catch((err) => {
-                console.log(err.response.data);
-            })
-    }
-
-    // Submit handler for disliking
-    const dislikeHandler = () => {
-        axios
-            .put(`http://localhost:8000/api/comment/${comment._id}`, { withCredentials: true })
+            .delete(`http://localhost:8000/api/comment/${comment._id}`, { withCredentials: true })
             .then((res) => {
                 console.log(res.data);
                 navigate('/dashboard')
@@ -116,23 +100,14 @@ const Dashboard = () => {
                                     <textarea name="description" id="comment" cols="60" rows="5" style={{ fontSize: "20px"}} value={comment.description} readOnly></textarea>
                                 </div>
                             </div>
-                            <div className='d-flex justify-content-end'>
-                                <div>
-                                    <Link to={`http://localhost:8000/api/manga/${manga}`}>
-                                        {comment.taggedManga && <span>Tagged manga: {comment.taggedManga.title }</span>}
+                            <div className='d-flex justify-content-end align-items-center'>
+                                <div className='align-items-center'>
+                                    <Link to={`/manga/${comment.taggedManga._id}`}>
+                                        {comment.taggedManga && <span>Tagged Manga: {comment.taggedManga.title }</span>}
                                     </Link>
                                 </div>
-                                <div>
-                                    <button className='btn btn-primary' onClick={likeHandler}>Likes: {comment.likeCount}</button>
-                                </div>
                                 <div className='mx-2'>
-                                    <button className='btn btn-warning' onClick={dislikeHandler}>Dislikes: {comment.dislikeCount}</button>
-                                </div>
-                                <div className='me-2'>
                                     <button className='btn btn-danger' onClick={deleteHandler}>Delete</button>
-                                </div>
-                                <div className='me-2'>
-                                    <button className='btn btn-dark'>Reply</button>
                                 </div>
                             </div>
                         </div>
