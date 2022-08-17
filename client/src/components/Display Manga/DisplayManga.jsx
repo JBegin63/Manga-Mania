@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Header from '../Header/Header';
 import Comment from '../Comment/Comment';
 import './styles.css'
 
 const DisplayManga = () => {
-    const navigate = useNavigate('');
     const [errors, setErrors] = useState({});
     const [comment, setComment] = useState([]);
     const { id } = useParams('');
@@ -56,12 +55,10 @@ const DisplayManga = () => {
     
     // Submit button for editing manga
     const submitHandler = (e) => {
-        e.preventDefault();
         axios
             .put(`http://localhost:8000/api/manga/${id}`, manga, { withCredentials: true })
             .then((res) => {
                 console.log(res);
-                navigate('/manga')
             })
             .catch((err) => {
                 console.log(err.response.data);
@@ -118,12 +115,15 @@ const DisplayManga = () => {
     }
 
     // Delete comment
-    const deleteCommentHandler = (id) => {
+    const deleteCommentHandler = (idFromBelow) => {
         axios
-            .delete(`http://localhost:8000/api/comment/${id}`, { withCredentials: true })
+            .delete(`http://localhost:8000/api/comment/${idFromBelow}`, { withCredentials: true })
             .then((res) => {
                 console.log(res.data);
-                navigate('/dashboard')
+                const filteredComments = comment.filter(comment => {
+                    return comment._id !== idFromBelow
+                });
+                setComment(filteredComments);
             })
             .catch((err) => {
                 console.log(err.response.data);
@@ -135,11 +135,13 @@ const DisplayManga = () => {
             <Header />
             <div className='row'>
                 <h1 className='my-4'>{manga.title}</h1>
-                <div>
-                    <button className='btn btn-primary' onClick={likeMangaHandler}>Like</button>
-                </div>
-                <div>
-                    <button className='btn btn-danger' onClick={dislikeMangaHandler}>Unlike</button>
+                <div className='d-flex justify-content-center align-items-center'>
+                    <div>
+                        <button className='btn btn-primary mx-1' onClick={likeMangaHandler}>Like</button>
+                    </div>
+                    <div>
+                        <button className='btn btn-danger mx-1' onClick={dislikeMangaHandler}>Unlike</button>
+                    </div>
                 </div>
             </div>
             <div className='row'>
@@ -265,7 +267,7 @@ const DisplayManga = () => {
                             </div>
                             <div className='d-flex justify-content-end'>
                                 <div className='me-2'>
-                                    <button className='btn btn-danger' onClick={deleteCommentHandler}>Delete</button>
+                                    <button className='btn btn-danger' onClick={() => deleteCommentHandler(comment._id)}>Delete</button>
                                 </div>
                             </div>
                         </div>

@@ -1,0 +1,54 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+img {
+    width: 160px;
+    height: auto;
+}
+
+.profilePicContainer{
+    border: 1px solid black;
+    padding: 40px;
+}
+
+.profile-container {
+    background-color: #eee;
+}
+
+.mangaCoverImage {
+    width: auto;
+    height: 500px;
+}
+
+.mangaCoverImageProfilePage {
+    width: auto;
+    height: 650px;
+}
+
+.card { 
+    width: 20%;
+    height: auto;
+}
+
+.cardProfilePage { 
+    width: 20%;
+    height: auto;
+}
+
+a:link { 
+    text-decoration: none; 
+}
+
+a:visited { 
+    text-decoration: none; 
+}
+
+a:hover { 
+    text-decoration: none; 
+}
+
+a:active { 
+    text-decoration: none; 
+}

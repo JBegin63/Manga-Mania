@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Comment from '../Comment/Comment';
 import Header from '../Header/Header';
@@ -8,7 +8,6 @@ import Header from '../Header/Header';
 const Dashboard = () => {
     const [users, setUsers] = useState([]);
     const [comment, setComment] = useState([]);
-    const navigate = useNavigate();
 
     // Getting all users
     useEffect(() => {
@@ -49,12 +48,15 @@ const Dashboard = () => {
     }, [comment.taggedManga])
 
     // Submit handler for comment
-    const deleteHandler = () => {
+    const deleteCommentHandler = (idFromBelow) => {
         axios
-            .delete(`http://localhost:8000/api/comment/${comment._id}`, { withCredentials: true })
+            .delete(`http://localhost:8000/api/comment/${idFromBelow}`, { withCredentials: true })
             .then((res) => {
                 console.log(res.data);
-                navigate('/dashboard')
+                const filteredComments = comment.filter(comment => {
+                    return comment._id !== idFromBelow
+                });
+                setComment(filteredComments);
             })
             .catch((err) => {
                 console.log(err.response.data);
@@ -79,14 +81,8 @@ const Dashboard = () => {
                     ))}
                 </div>
                 <div className='col-6 allComments me-5'>
-                    <div className='d-flex justify-content-between p-2'>
+                    <div className='d-flex p-2'>
                         <h2>Timeline</h2>
-                        <form>
-                            <select name="filter" id="filter">
-                                <option value="">All</option>
-                                <option value="">Favorited</option>
-                            </select>
-                        </form>
                     </div>
                     <Comment />
                     {comment.map((comment) => (
@@ -94,7 +90,9 @@ const Dashboard = () => {
                             <div className='d-flex align-items-center'>
                                 <div className='profilePicContainerComment align-items-center'>
                                     <img src={comment.createdBy.profilePic} className='img-thumbnail rounded-circle mt-2' alt="profile pic" />
-                                    <p style={{ fontSize: "24px"}}>{comment.createdBy.username}</p>
+                                    <Link to={`/api/user/${comment.createdBy._id}`}>
+                                        <p style={{ fontSize: "24px"}}>{comment.createdBy.username}</p>
+                                    </Link>
                                 </div>
                                 <div className='textContainer flex-grow-1'>
                                     <textarea name="description" id="comment" cols="60" rows="5" style={{ fontSize: "20px"}} value={comment.description} readOnly></textarea>
@@ -107,7 +105,7 @@ const Dashboard = () => {
                                     </Link>
                                 </div>
                                 <div className='mx-2'>
-                                    <button className='btn btn-danger' onClick={deleteHandler}>Delete</button>
+                                    <button className='btn btn-danger' onClick={() => deleteCommentHandler(comment._id)}>Delete</button>
                                 </div>
                             </div>
                         </div>

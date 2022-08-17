@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './styles.css';
+import './User.css';
 import Header from '../Header/Header';
 import axios from 'axios';
 import { useParams, useNavigate, Link } from 'react-router-dom';
@@ -167,12 +167,12 @@ const User = () => {
                     </div>
                 </form>
                 <div className='row mt-5'>
-                    <h2 className='mb-5'>Liked Manga</h2>
+                    <h2 className=''>Liked Manga</h2>
                     <div className='d-flex flex-wrap justify-content-evenly align-items-center mt-5'>
                         {manga.map((manga) => (
                             <div key={manga._id} className='card mb-4' style={{ flex: "0 0 30%" }}>
                                 <Link to={`/manga/${manga._id}`} style={{ textDecoration: 'none'}}>
-                                    <img className='card-img-top mangaCoverImage' src={manga.coverImage} alt='Card pic' />
+                                    <img className='card-img-top mangaCoverImageProfilePage' src={manga.coverImage} alt='Card pic' />
                                     <div className='card-body'>
                                         <h2 className='card-title'>{manga.title}</h2>
                                     </div>
@@ -183,6 +183,7 @@ const User = () => {
                 </div>
             </div>
         )
+
     } else {
         return (
             <div className='profile-container'>
@@ -211,20 +212,18 @@ const User = () => {
                     </div>
                 </div>
                 <div className='row mt-5'>
-                    <h2 className='mb-5'>Liked Manga</h2>
-                    <div className='d-flex justify-content-evenly align-items-center'>
-                        <div>
-                            {manga.map((manga) => (
-                                <div key={manga.id} className='card mb-4' style={{ flex: "0 0 30%" }}>
-                                    <Link to={`/manga/${manga._id}`} style={{ textDecoration: 'none'}}>
-                                        <img className='card-img-top mangaCoverImage' src={manga.coverImage} alt='Card pic' />
-                                        <div className='card-body'>
-                                            <h2 className='card-title'>{manga.title}</h2>
-                                        </div>
-                                    </Link>
-                                </div>
-                            ))}
-                        </div>
+                    <h2 className=''>Liked Manga</h2>
+                    <div className='d-flex flex-wrap justify-content-evenly align-items-center mt-5'>
+                        {manga.map((manga) => (
+                            <div key={manga._id} className='card mb-4' style={{ flex: "0 0 30%" }}>
+                                <Link to={`/manga/${manga._id}`} style={{ textDecoration: 'none'}}>
+                                    <img className='card-img-top mangaCoverImageProfilePage' src={manga.coverImage} alt='Card pic' />
+                                    <div className='card-body'>
+                                        <h2 className='card-title'>{manga.title}</h2>
+                                    </div>
+                                </Link>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
