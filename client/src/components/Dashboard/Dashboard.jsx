@@ -35,18 +35,6 @@ const Dashboard = () => {
             })
     }, [])
 
-    // Getting tagged manga of comments
-    useEffect(() => {
-        axios
-            .get(`http://localhost:8000/api/comments/${comment.taggedManga}`)
-            .then((res) => {
-                console.log(res.data);
-            })
-            .catch((err) => {
-                console.log('Failed to load comments', err)
-            })
-    }, [comment.taggedManga])
-
     // Submit handler for comment
     const deleteCommentHandler = (idFromBelow) => {
         axios

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Header from '../Header/Header';
 import Comment from '../Comment/Comment';
 import './styles.css'
@@ -256,20 +256,22 @@ const DisplayManga = () => {
                     <Comment />
                     {comment.map((comment) => (
                         <div key={comment._id} className='d-flex flex-direction-row flex-column flex-wrap align-items-stretch my-4 commentContainer '>
-                            <div className='d-flex align-items-center'>
-                                <div className='profilePicContainerComment align-items-center'>
-                                    <img src={comment.createdBy.profilePic} className='img-thumbnail rounded-circle mt-2' alt="profile pic" />
-                                    <p style={{ fontSize: "24px"}}>{comment.createdBy.username}</p>
+                            <Link to={`/api/user/${comment.createdBy._id}`}>
+                                <div className='d-flex align-items-center'>
+                                    <div className='profilePicContainerComment align-items-center'>
+                                        <img src={comment.createdBy.profilePic} className='img-thumbnail rounded-circle mt-2' alt="profile pic" />
+                                        <p style={{ fontSize: "24px"}}>{comment.createdBy.username}</p>
+                                    </div>
+                                    <div className='textContainer flex-grow-1'>
+                                        <textarea name="description" id="comment" cols="60" rows="5" style={{ fontSize: "20px"}} value={comment.description} readOnly></textarea>
+                                    </div>
                                 </div>
-                                <div className='textContainer flex-grow-1'>
-                                    <textarea name="description" id="comment" cols="60" rows="5" style={{ fontSize: "20px"}} value={comment.description} readOnly></textarea>
+                                <div className='d-flex justify-content-end'>
+                                    <div className='me-2'>
+                                        <button className='btn btn-danger' onClick={() => deleteCommentHandler(comment._id)}>Delete</button>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className='d-flex justify-content-end'>
-                                <div className='me-2'>
-                                    <button className='btn btn-danger' onClick={() => deleteCommentHandler(comment._id)}>Delete</button>
-                                </div>
-                            </div>
+                            </Link>
                         </div>
                     ))}
                 </div>

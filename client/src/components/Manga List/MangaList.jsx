@@ -3,6 +3,7 @@ import axios from 'axios';
 import Header from '../Header/Header';
 import './styles.css'
 import { Link } from 'react-router-dom';
+
 const MangaList = () => {
     const [manga, setManga] = useState([]);
 
@@ -24,16 +25,10 @@ const MangaList = () => {
             <Header />
             <div className='d-flex justify-content-evenly mt-1'>
                 <div className='col-8 allManga'>
-                    <div className='d-flex flex-wrap justify-content-between py-2 px-4 mt-5'>
+                    <div className='d-flex flex-wrap justify-content-between px-4 mt-4'>
                         <h1 className='ms-2'>All Manga</h1>
-                        <form className='me-2'>
-                            <select name="filter" id="filter">
-                                <option value="allManga">All</option>
-                                <option value="favoritedManga">Favorited</option>
-                            </select>
-                        </form>
                     </div>
-                    <div className='d-flex flex-wrap justify-content-evenly align-items-center mt-5'>
+                    <div className='d-flex flex-wrap justify-content-evenly align-items-center mt-3'>
                         {manga.map((manga) => (
                             <div key={manga._id} className='card mb-4' style={{ flex: "0 0 30%" }}>
                                 <Link to={`/manga/${manga._id}`} style={{ textDecoration: 'none'}}>
