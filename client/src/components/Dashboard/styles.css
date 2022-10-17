@@ -20,3 +20,8 @@ body {
 .dashboard-container {
     background-color: #eee;
 }
+
+.userImage {
+    width: 100px;
+    height: auto;
+}

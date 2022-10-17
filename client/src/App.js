@@ -12,15 +12,15 @@ import NewManga from './components/New Manga/NewManga';
 function App() {
   return (
     <BrowserRouter>
-      <div className="App">
+      <div className="App" >
         <Routes>
+          <Route element={<Login />} path='/' />
+          <Route element={<Register />} path='/register' />
           <Route element={<Dashboard />} path='/dashboard' />
           <Route element={<MangaList />} path='/manga' />
           <Route element={<DisplayManga />} path='/manga/:id' />
           <Route element={<NewManga />} path='/add/manga' />
           <Route element={<User />} path='/api/user/:id' />
-          <Route element={<Login />} path='/' />
-          <Route element={<Register />} path='/register' />
         </Routes>
       </div>
     </BrowserRouter>

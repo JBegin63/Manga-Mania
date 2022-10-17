@@ -6,3 +6,7 @@
 .App {
   text-align: center;
 }
+
+body {
+  background-color: #dddddd;
+}

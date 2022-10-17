@@ -44,18 +44,19 @@ const getCommentById = (req, res) => {
 };
 
 const getMangaByComment = (req, res) => {
-    Manga.findOne({ _id: req.params.id }).then((manga) => {
-        Comment.find({ taggedManga: manga._id })
-            .populate('taggedManga', 'id title')
-            .populate('createdBy', 'username email profilePic')
-            .then((manga) => {
-                res.json(manga);
-            })
-            .catch((err) => {
-                console.log(err);
-                res.status(400)
-                .json({ message:"something went wrong in finding all the manga", error: err });
-            })
+    Manga.findOne({ _id: req.params.id })
+        .then((manga) => {
+            Comment.find({ taggedManga: manga._id })
+                .populate('taggedManga', 'id title')
+                .populate('createdBy', 'username email profilePic')
+                .then((manga) => {
+                    res.json(manga);
+                })
+                .catch((err) => {
+                    console.log(err);
+                    res.status(400)
+                    .json({ message:"something went wrong in finding all the manga", error: err });
+                })
         .catch((err) => {
             console.log(err);
             res.status(400)

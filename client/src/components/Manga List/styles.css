@@ -9,17 +9,13 @@ body {
 
 .allManga {
     padding: 10px;
-    border: 1px solid black;
+    border: 3px solid black;
 }
 
 .mangalist-container {
-    background-color: #eee;
+    background-color: #dddddd;
 }
 
-.mangaCoverImage {
-    width: auto;
-    height: 500px;
-}
 
 .card { 
     width: 20%;

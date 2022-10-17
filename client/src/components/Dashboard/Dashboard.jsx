@@ -63,7 +63,10 @@ const Dashboard = () => {
                     {users.map((user) => (
                         <div key={user._id}>
                             <Link to={`/api/user/${user._id}`}>
-                                <p style={{ fontSize: "24px"}}>{user.username}</p>
+                                <div className='d-flex justify-content-center '>
+                                    <img src={user.profilePic} className='img-thumbnail rounded-circle userImage mx-2' alt="profile pic" />
+                                    <p className='align-self-center mx-2' style={{ fontSize: "30px"}}>{user.username}</p>
+                                </div>
                             </Link>
                         </div>
                     ))}
